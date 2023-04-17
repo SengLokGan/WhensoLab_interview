@@ -7,9 +7,10 @@ import { Button, Grid } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { BasicTextField } from "../components";
-import { useLoginError } from "../slices";
+import { useLoginError, useLoginLoading } from "../slices";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -28,6 +29,7 @@ export const LoginForm = ({ onSubmit }) => {
 
   const [showPassword, setShowPassword] = useState(false);
   const loginError = useLoginError();
+  const isLoading = useLoginLoading();
 
   useEffect(() => {
     if (loginError && loginError !== "Sorry, that password isnt right") {
@@ -67,11 +69,19 @@ export const LoginForm = ({ onSubmit }) => {
         <Grid
           item
           xs={12}
-          style={{ justifyContent: "flex-end", display: "flex" }}>
+          style={{ justifyContent: "flex-start", display: "flex" }}>
           <Button
             style={{ textTransform: "none", color: "#F2E3DB" }}
             type="submit">
             Login
+            {isLoading && (
+              <CircularProgress
+                size="20px"
+                color="inherit"
+                sx={{ ml: 1 }}
+                data-testid="progressbar"
+              />
+            )}
           </Button>
         </Grid>
       </Grid>

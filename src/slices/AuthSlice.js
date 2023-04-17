@@ -34,3 +34,6 @@ export const useLoginStatus = () =>
 export const useLoginError = () =>
   // @ts-ignore
   useAppSelector((state) => state.auth?.error);
+export const useLoginLoading = () =>
+  // @ts-ignore
+  useAppSelector((state) => state?.auth?.loading);
